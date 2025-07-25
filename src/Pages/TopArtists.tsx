@@ -14,6 +14,7 @@ const TopArtists: React.FC = () => {
   }>(GET_TOP_ARTISTS, {
     variables: { limit: 10, timeRange },
   });
+
   const handleRangeChange = (range: string) => {
     setTimeRange(range);
     refetch({ limit: 10, timeRange: range });
@@ -22,13 +23,13 @@ const TopArtists: React.FC = () => {
   if (error) return <p className="text-red-500">Error: {error.message}</p>;
 
   return (
-    <div>
-      <div className="mt-4">
+    <div className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-6">
+      <div className="mb-6">
         <TimeRangeSelector selected={timeRange} onChange={handleRangeChange} />
       </div>
 
       <Loader loading={loading} message="Fetching Your Top Artists...">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {data?.topArtists.map((artist: TopArtist) => (
             <TopArtistCard key={artist.id} artist={artist} />
           ))}

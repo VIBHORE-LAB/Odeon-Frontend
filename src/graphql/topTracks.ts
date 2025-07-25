@@ -1,8 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const GET_TOP_TRACKS = gql`
-  query {
-    topTracks {
+
+    query GetTopTracks($limit: Int!, $timeRange: String!) {
+    topTracks(limit: $limit, timeRange: $timeRange) {
       id
       name
       artists

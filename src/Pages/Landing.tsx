@@ -5,7 +5,7 @@ export const Landing = () => (
       Get personalized insights from your Spotify activity.
     </p>
     <a
-      href="https://c157d3af6b48.ngrok-free.app/login"
+      href="https://041c5fb2f5c3.ngrok-free.app/login"
       className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg"
     >
       Connect with Spotify
