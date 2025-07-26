@@ -7,10 +7,12 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("spotify_access_token");
+  const refreshToken = localStorage.getItem("spotify_refresh_token");
   return {
     headers: {
       ...headers,
       Authorization: token ? `Bearer ${token}` : "",
+      "x-refresh-token": refreshToken,
     },
   };
 });

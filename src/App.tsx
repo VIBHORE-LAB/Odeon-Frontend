@@ -6,6 +6,7 @@ import { TopSongs } from "./Pages/TopSongs";
 import TopArtists from "./Pages/TopArtists";
 import { AuthCallback } from "./Pages/AuthCallback";
 import { useEffect } from "react";
+import { PrivateRoute } from "./components/PrivateRoute";
 function App() {
   function getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;
@@ -15,9 +16,9 @@ function App() {
   }
 
   useEffect(() => {
-    const token = getCookie("spotify_token");
+    const token = getCookie("spotify_access_token");
     if (token) {
-      localStorage.setItem("spotify_token", token);
+      localStorage.setItem("spotify_access_   token", token);
     }
   }, []);
 
@@ -26,10 +27,31 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route path="/auth/callback" element={<AuthCallback />} />
-          <Route path="/topArtists" element={<TopArtists />} />
-          <Route path="topSongs" element={<TopSongs />} />
+          <Route
+            path="/topArtists"
+            element={
+              <PrivateRoute>
+                <TopArtists />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="topSongs"
+            element={
+              <PrivateRoute>
+                <TopSongs />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Layout>
     </Router>
