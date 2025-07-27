@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 function App() {
   const [token, setToken] = useState<string | null>(null);
 
-  // Utility to get a cookie
   function getCookie(name: string): string | null {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -20,7 +19,6 @@ function App() {
     return null;
   }
 
-  // Fetch token from localStorage or cookie
   useEffect(() => {
     const storedToken = localStorage.getItem("spotify_access_token");
 
@@ -36,7 +34,7 @@ function App() {
   }, []);
 
   return (
-    <SpotifyPlayerProvider token={token}>
+<SpotifyPlayerProvider token={token ?? ""}>
       <Router>
         <Layout>
           <Routes>
