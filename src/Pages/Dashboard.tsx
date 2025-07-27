@@ -11,7 +11,7 @@ import { Loader } from "../components/Loader";
 import { PlaylistStatCard } from "../components/PlaylistsStatCard";
 import { GET_PLAYLISTS_STATS } from "../graphql/playlistsStats";
 import type { PlayList } from "../Types/PlayListTypes";
-import type { FollowedArtistsResponse } from "../Types/artistTypes";
+import type { FollowedArtistsData } from "../Types/artistTypes";
 import { GET_FOLLOWED_ARTISTS } from "../graphql/followedArtists";
 import { FollowedArtistsStatCard } from "../components/FollowedArtistsFollowedArtistsStatCard";
 import { GET_RANDOM_TRACKS } from "../graphql/recommendedTracks";
@@ -50,12 +50,9 @@ const Dashboard: React.FC = () => {
     data: followedArtistsStatsData,
     loading: followedArtistsLoading,
     error: followedArtistsError,
-  } = useQuery<{ followedArtists: FollowedArtistsResponse }>(
-    GET_FOLLOWED_ARTISTS,
-    {
-      variables: { limit: 50 },
-    }
-  );
+  } = useQuery<{ followedArtists: FollowedArtistsData }>(GET_FOLLOWED_ARTISTS, {
+    variables: { limit: 50 },
+  });
 
   const {
     data: randomTracksData,
@@ -68,8 +65,27 @@ const Dashboard: React.FC = () => {
     refetch({ limit: 10, timeRange: range });
   };
 
-  if (genreError || playbackError || playListError || followedArtistsError || randomTracksError) {
-    return <p>Error: {(genreError || playbackError || playListError || followedArtistsError || randomTracksError)?.message}</p>;
+  if (
+    genreError ||
+    playbackError ||
+    playListError ||
+    followedArtistsError ||
+    randomTracksError
+  ) {
+    return (
+      <p>
+        Error:{" "}
+        {
+          (
+            genreError ||
+            playbackError ||
+            playListError ||
+            followedArtistsError ||
+            randomTracksError
+          )?.message
+        }
+      </p>
+    );
   }
 
   return (
@@ -121,7 +137,9 @@ const Dashboard: React.FC = () => {
           {followedArtistsLoading ? (
             <Loader loading={true} />
           ) : followedArtistsStatsData?.followedArtists ? (
-            <FollowedArtistsStatCard stats={followedArtistsStatsData.followedArtists} />
+            <FollowedArtistsStatCard
+              stats={followedArtistsStatsData.followedArtists}
+            />
           ) : null}
         </div>
 
@@ -131,7 +149,9 @@ const Dashboard: React.FC = () => {
             <Loader loading={true} />
           ) : (
             randomTracksData && (
-              <RecommendedTracks tracks={randomTracksData.randomRecommendedTracks} />
+              <RecommendedTracks
+                tracks={randomTracksData.randomRecommendedTracks}
+              />
             )
           )}
         </div>
