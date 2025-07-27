@@ -16,3 +16,11 @@ export interface TopArtist {
   images: ArtistImage[];
   external_urls: ExternalUrls;
 }
+export interface FollowedArtistsResponse {
+  followedArtists: FollowedArtistsData;
+}
+
+export interface FollowedArtistsData {
+  total: number;
+  items: TopArtist[];
+}

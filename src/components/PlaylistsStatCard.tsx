@@ -21,7 +21,7 @@ export const PlaylistStatCard: React.FC<PlaylistsProps> = ({ playlists }) => {
           </div>
 
           <div
-            className="space-y-6 overflow-y-auto custom-scrollbar pr-2"
+            className="space-y-6 overflow-x-clip overflow-y-auto custom-scrollbar pr-2"
             style={{ maxHeight: "600px" }} 
           >
             {topFive.map((playlist) => (
@@ -35,7 +35,7 @@ export const PlaylistStatCard: React.FC<PlaylistsProps> = ({ playlists }) => {
                   className="w-48 h-48 object-cover rounded-xl shadow-md"
                 />
                 <div className="flex-1 text-left">
-                  <h3 className="text-xl font-semibold text-white mb-1">
+                  <h3 className="text-xl  font-semibold text-white mb-1">
                     {playlist.name}
                   </h3>
                   <p className="text-sm text-zinc-400 mb-1">

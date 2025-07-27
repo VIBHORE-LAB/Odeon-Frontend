@@ -11,6 +11,13 @@ import { Loader } from "../components/Loader";
 import { PlaylistStatCard } from "../components/PlaylistsStatCard";
 import { GET_PLAYLISTS_STATS } from "../graphql/playlistsStats";
 import type { PlayList } from "../Types/PlayListTypes";
+import type { FollowedArtistsResponse } from "../Types/artistTypes";
+import { GET_FOLLOWED_ARTISTS } from "../graphql/followedArtists";
+import { FollowedArtistsStatCard } from "../components/FollowedArtistsFollowedArtistsStatCard";
+import { GET_RANDOM_TRACKS } from "../graphql/recommendedTracks";
+import type { RandomTrack } from "../Types/randomTracks";
+import { RecommendedTracks } from "../components/RecommendedTracks";
+
 const Dashboard: React.FC = () => {
   const [timeRange, setTimeRange] = useState("medium_term");
 
@@ -39,15 +46,30 @@ const Dashboard: React.FC = () => {
     variables: { offset: 0 },
   });
 
+  const {
+    data: followedArtistsStatsData,
+    loading: followedArtistsLoading,
+    error: followedArtistsError,
+  } = useQuery<{ followedArtists: FollowedArtistsResponse }>(
+    GET_FOLLOWED_ARTISTS,
+    {
+      variables: { limit: 50 },
+    }
+  );
+
+  const {
+    data: randomTracksData,
+    loading: randomTracksLoading,
+    error: randomTracksError,
+  } = useQuery<{ randomRecommendedTracks: RandomTrack[] }>(GET_RANDOM_TRACKS);
+
   const handleRangeChange = (range: string) => {
     setTimeRange(range);
     refetch({ limit: 10, timeRange: range });
   };
 
-  if (genreError || playbackError) {
-    return (
-      <p>Error: {(genreError || playbackError || playListError)?.message}</p>
-    );
+  if (genreError || playbackError || playListError || followedArtistsError || randomTracksError) {
+    return <p>Error: {(genreError || playbackError || playListError || followedArtistsError || randomTracksError)?.message}</p>;
   }
 
   return (
@@ -79,13 +101,37 @@ const Dashboard: React.FC = () => {
             )
           )}
         </div>
+      </div>
 
-        <div className="h-full">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 ml-10">
+        {/* Playlist Stats */}
+        <div className="w-full rounded-xl shadow p-4">
           {playListLoading ? (
             <Loader loading={true} />
           ) : (
             playlistsStatsData?.playlistsStats && (
               <PlaylistStatCard playlists={playlistsStatsData.playlistsStats} />
+            )
+          )}
+        </div>
+
+        {/* Followed Artists */}
+        <div className="w-full rounded-xl shadow p-4">
+          {followedArtistsLoading ? (
+            <Loader loading={true} />
+          ) : followedArtistsStatsData?.followedArtists ? (
+            <FollowedArtistsStatCard stats={followedArtistsStatsData.followedArtists} />
+          ) : null}
+        </div>
+
+        {/* Recommended Tracks */}
+        <div className="w-full rounded-xl shadow p-4">
+          {randomTracksLoading ? (
+            <Loader loading={true} />
+          ) : (
+            randomTracksData && (
+              <RecommendedTracks tracks={randomTracksData.randomRecommendedTracks} />
             )
           )}
         </div>

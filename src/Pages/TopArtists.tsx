@@ -25,9 +25,9 @@ const TopArtists: React.FC = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedLimit(limit);
-    }, 500); 
+    }, 500);
 
-    return () => clearTimeout(handler); 
+    return () => clearTimeout(handler);
   }, [limit]);
 
   useEffect(() => {
@@ -38,9 +38,22 @@ const TopArtists: React.FC = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-6">
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <TimeRangeSelector selected={timeRange} onChange={handleRangeChange} />
-        <LimitSlider limit={limit} setLimit={setLimit} label="Artist" />
+      <div className="mb-6 flex items-center justify-between gap-6">
+        {/* Left spacer */}
+        <div className="w-1/3" />
+
+        {/* Centered TimeRangeSelector */}
+        <div className="w-1/3 flex justify-center">
+          <TimeRangeSelector
+            selected={timeRange}
+            onChange={handleRangeChange}
+          />
+        </div>
+
+        {/* Right-aligned LimitSlider */}
+        <div className="w-1/3 flex justify-end">
+          <LimitSlider limit={limit} setLimit={setLimit} />
+        </div>
       </div>
 
       <Loader loading={loading} message="Fetching Your Top Artists...">

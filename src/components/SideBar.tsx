@@ -103,10 +103,12 @@ export const Sidebar: React.FC = () => {
 
         <button
           onClick={handleLogout}
-          className="mt-3 w-full flex items-center justify-center gap-2 rounded-md px-3 py-2 bg-gray-800/60 hover:bg-gray-800 transition-colors text-sm"
+          className="mt-3 w-full flex items-center justify-start gap-2 rounded-md px-3 py-2 bg-gray-800/60 hover:bg-gray-800 transition-colors text-sm"
         >
-          <LogOut size={16} />
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="shrink-0">
+            <LogOut size={16} />
+          </span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity truncate">
             Logout
           </span>
         </button>

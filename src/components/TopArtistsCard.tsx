@@ -8,7 +8,7 @@ interface TopArtistCardProps {
 
 const TopArtistCard: React.FC<TopArtistCardProps> = ({ artist }) => {
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black text-white rounded-2xl p-4 text-center shadow-md hover:shadow-green-500/30 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 relative group">
+    <div className=" ml-6 bg-gradient-to-b from-gray-900 to-black text-white rounded-2xl p-4 text-center shadow-md hover:shadow-green-500/30 transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 relative group">
       {/* Artist Image */}
       {artist.images?.[0] && (
         <div className="overflow-hidden rounded-xl mb-3 aspect-[4/3]">

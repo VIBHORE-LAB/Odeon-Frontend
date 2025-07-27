@@ -1,84 +1,46 @@
+// components/LimitSlider.tsx// components/LimitSlider.tsx
+
 import React from "react";
-import { makeStyles } from "@mui/styles";
 
-interface LimitSliderProps {
+type Props = {
   limit: number;
-  setLimit: (newLimit: number) => void;
-}
+  setLimit: (value: number) => void;
+};
 
-const useStyles = makeStyles({
-  sliderWrapper: {
-    position: "relative",
-    marginBottom: "1rem",
-  },
-  limitLabel: {
-    position: "absolute",
-    top: "-1.5rem",
-    right: 0,
-    fontSize: "0.875rem",
-    fontWeight: 600,
-    color: "#22c55e", // Tailwind green-400
-  },
-  slider: {
-    width: "100%",
-    appearance: "none",
-    height: "8px",
-    borderRadius: "9999px",
-    background: (props: { limit: number }) =>
-      `linear-gradient(to right, #22c55e 0%, #22c55e ${props.limit * 2}%, #333 ${props.limit * 2}%, #333 100%)`,
-    cursor: "pointer",
+const LimitSlider: React.FC<Props> = ({ limit, setLimit }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLimit(Number(e.target.value));
+  };
 
-    "&::-webkit-slider-thumb": {
-      WebkitAppearance: "none",
-      height: "20px",
-      width: "20px",
-      borderRadius: "50%",
-      background: "#22c55e",
-      border: "2px solid white",
-      marginTop: "-6px",
-      boxShadow: "0 0 4px rgba(0,0,0,0.4)",
-      transition: "background 0.2s ease",
-    },
-
-    "&::-webkit-slider-thumb:hover": {
-      background: "#16a34a",
-    },
-
-    "&::-moz-range-thumb": {
-      height: "20px",
-      width: "20px",
-      borderRadius: "50%",
-      background: "#22c55e",
-      border: "2px solid white",
-      boxShadow: "0 0 4px rgba(0,0,0,0.4)",
-      cursor: "pointer",
-    },
-
-    "&::-moz-range-track": {
-      height: "8px",
-      borderRadius: "9999px",
-      background: (props: { limit: number }) =>
-        `linear-gradient(to right, #22c55e 0%, #22c55e ${props.limit * 2}%, #333 ${props.limit * 2}%, #333 100%)`,
-    },
-  },
-});
-
-const LimitSlider: React.FC<LimitSliderProps> = ({ limit, setLimit }) => {
-  const classes = useStyles({ limit });
+  const handleReset = () => {
+    setLimit(20); // default value
+  };
 
   return (
-    <div className="p-6 rounded-xl text-white w-full max-w-md mx-auto">
-      <div className={classes.sliderWrapper}>
-        <div className={classes.limitLabel}>{limit}</div>
+    <div className="flex flex-col items-center w-full max-w-sm">
+      <button
+        onClick={handleReset}
+        className="text-sm text-[#1DB954] hover:underline"
+      >
+         Limit
+      </button>
+
+      <div className="flex items-center w-full gap-3">
+     
 
         <input
+          id="limit"
           type="range"
           min={1}
           max={50}
           value={limit}
-          onChange={(e) => setLimit(Number(e.target.value))}
-          className={classes.slider}
+          onChange={handleChange}
+          className="w-full h-1 rounded-lg appearance-none bg-gray-600 cursor-pointer accent-[#1DB954]"
         />
+
+        <span className="text-sm font-semibold text-gray-100 w-6 text-right">
+          {limit}
+        </span>
       </div>
     </div>
   );
