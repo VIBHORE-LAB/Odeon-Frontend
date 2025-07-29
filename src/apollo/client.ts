@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({
-  uri: "https://odeon-backend-env.eba-urkfazg5.us-east-1.elasticbeanstalk.com/graphql",
+  uri: "https://odeon-server.onrender.com/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

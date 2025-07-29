@@ -5,7 +5,7 @@ export const Landing = () => (
       Get personalized insights from your Spotify activity.
     </p>
     <a
-      href="https://odeon-backend-env.eba-urkfazg5.us-east-1.elasticbeanstalk.com/login"
+      href="https://odeon-server.onrender.com/login"
       className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg"
     >
       Connect with Spotify
